@@ -1,27 +1,25 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
-import Login from './screens/LoginScreen';
-
+import Main from './Main/Main';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import MyTasksReducer from './MyTasks/MyTasksReducer';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from "redux-thunk";
 
-const store = createStore(MyTasksReducer);
+import ChoreReducer from './Reducers/ChoreRecorderReducer';
 
-export default class App extends React.Component {
+// MyTasks
+//import MyTasksReducer from './MyTasks/MyTasksReducer';
+const store = createStore(ChoreReducer, applyMiddleware(thunk));
+
+ export default class App extends React.Component {
   state = {
-    loggedin: true
+    loggedin: false
   };
 
   render() {
 
-
-    if(!this.state.loggedin)
-    {
-      return <Login />;
-    }
+   
 
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -33,12 +31,8 @@ export default class App extends React.Component {
       );
     } else {
       return (
-       
         <Provider store={ store }>
-        <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
-          </View>
+          <Main />
         </Provider>
       );
     }
@@ -70,6 +64,9 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
+
+
+
 
 const styles = StyleSheet.create({
   container: {

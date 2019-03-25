@@ -14,11 +14,16 @@ const INITIAL_STATE = {
         },
         {
             key: '2',
-            name: 'Gel',
+            name: 'Wake up in the morning',
             done: false
         }, {
             key: '3',
             name: 'Kam hare',
+            done: false
+        },
+        {
+            key: '4',
+            name: 'Another task',
             done: false
         }
     ], 
@@ -41,11 +46,12 @@ const MyTasksReducer = (state = INITIAL_STATE, action) => {
 
             }
         case 'REFRESH_ITEMS': {
-            fetch('http://10.0.0.3/api/todo', {
+            fetch('https:10.0.0.55:5001/Tasks', {
                 method: 'GET',
                 headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                   
                 }
             }).then((response) => 
             {

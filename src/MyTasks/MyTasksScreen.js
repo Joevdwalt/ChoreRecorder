@@ -24,13 +24,12 @@ import { checkItem, refreshItems } from './MyTasksActions/';
     header: null,
   };
   
-  checkitem = (item) => {
-        
-       
+  componentDidMount() {
+    this.props.refreshItems(this.props.choreRecorderState) 
   }
 
   _renderSaving = () => {
-    if(this.props.myTasksState.saving){
+    if(this.props.choreRecorderState.saving){
         return (<Text>
                     Saving ...
                 </Text>);
@@ -51,22 +50,22 @@ import { checkItem, refreshItems } from './MyTasksActions/';
                   
                   />
                 <Text style={ TEXT.title  }>
-                    {this.props.myTasksState.date}
+                    {this.props.choreRecorderState.date}
                 </Text>
             </View>
             <FlatList
               refreshing = {false}
-              onRefresh ={ () => this.props.refreshItems() }
-              data={this.props.myTasksState.taskItems}
+              onRefresh ={ () => this.props.refreshItems(this.props.choreRecorderState) }
+              data={this.props.choreRecorderState.taskItems}
               renderItem={({item}) => 
-                <View style={styles.container} contentContainerStyle={styles.contentContainer}>
+                <View style={styles.container} contentContainerStyle={styles.contentContainer} >
                     <Text style={ styles.taskitem }>
                     {item.name}
                     </Text>
                     <Ionicons style={ styles.taskitemcheckbox } 
                         name={!item.done ? "ios-checkbox-outline" : 'ios-checkbox'} size={26} 
                         onPress={() =>
-                          this.props.checkItem(item)
+                          this.props.checkItem(this.props.choreRecorderState, item)
                         } />
                 </View>}
         />
@@ -75,9 +74,7 @@ import { checkItem, refreshItems } from './MyTasksActions/';
       
     );
   }
-
-  
-}
+ }
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
@@ -87,8 +84,8 @@ const mapDispatchToProps = dispatch => (
 );
 
 const mapStateToProps = (state) => {
-  const { myTasksState } = state
-  return { myTasksState }
+  const { choreRecorderState } = state
+  return { choreRecorderState }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyTasksScreen);

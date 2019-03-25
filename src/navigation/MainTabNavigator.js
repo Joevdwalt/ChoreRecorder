@@ -8,12 +8,9 @@ import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import MyTasksScreen from '../MyTasks/MyTasksScreen';
 
-
-
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
-
 
 const MyTasksStack = createStackNavigator({
   MyTasks: MyTasksScreen,
@@ -67,10 +64,6 @@ MyPointsStack.navigationOptions = {
     />
   ),
 };
-
-
-
-
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
