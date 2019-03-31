@@ -1,5 +1,5 @@
 import { _ } from 'lodash';
-
+import { Settings } from '../common/Settings';
 export function checkItem  (state, item){
   return dispatch => {
       dispatch(checkItemBegin);
@@ -11,7 +11,7 @@ export function checkItem  (state, item){
 
       itemToUpdate.done = !itemToUpdate.done;
 
-      return fetch('http://10.0.0.55:5001/Tasks/'+ itemToUpdate.id,{
+      return fetch(Settings.serverUrl +'/Tasks/'+ itemToUpdate.id,{
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -63,7 +63,7 @@ export function refreshItems(state) {
   return dispatch => {
     dispatch(beginRefreshItems());
 
-    return fetch('http://10.0.0.55:5001/Tasks', {
+    return fetch(Settings.serverUrl +'/Tasks', {
         method: 'GET',
         headers: {
           'Accept': 'application/json',

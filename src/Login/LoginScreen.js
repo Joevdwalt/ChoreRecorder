@@ -19,15 +19,28 @@ import { connect } from 'react-redux';
 
 import { login } from './LoginActions/';
 
+import { StackActions, NavigationActions } from 'react-navigation';
+
 class LoginScreen extends React.Component {
   static navigationOptions = {
     header: null,
+    title: 'Please sign in'
   };
 
   state = {
     username: "",
     password: ""
   }
+
+
+  componentDidUpdate(prevProps) {
+    if (this.props.choreRecorderState.loggedin)
+    {
+        this.props.navigation.dispatch(navigateToMain)
+    }
+  } 
+
+
   _loginFailure = () =>
   {
     if(this.props.choreRecorderState.logginFailureReason.length > 0){
@@ -39,6 +52,10 @@ class LoginScreen extends React.Component {
       return ;
     }
   
+  }
+
+  _redirectIfLoggedin = () =>{
+      
   }
   
   render () {
@@ -69,13 +86,31 @@ class LoginScreen extends React.Component {
               </TouchableOpacity>
             </View>
             
+            <TouchableOpacity onPress={() =>  this.props.navigation.dispatch(navigateToRegister)}>
+              <Text style={{color: 'blue'}}
+               >
+                Create account
+              </Text>
+              </TouchableOpacity>
            { this._loginFailure()}
+           { this._redirectIfLoggedin() }
           </View>
 
   }
 }
 
- 
+const navigateToRegister = NavigationActions.navigate({
+  routeName: 'Register',
+  params: {},
+  action: NavigationActions.navigate({ routeName: 'Register' }),
+});
+
+const navigateToMain = NavigationActions.navigate({
+  routeName: 'Main',
+  params: {},
+  action: NavigationActions.navigate({ routeName: 'Main' }),
+});
+
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({

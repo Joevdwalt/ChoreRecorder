@@ -23,15 +23,12 @@ class Main extends React.Component {
 }
 
 _renderLogin = (props) => {
-    if(props.choreRecorderState.loggedin){
+   
         return  <View style={styles.container}>
                  {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
                  <AppNavigator />
                 </View>
-    }else
-    {
-       return <LoginScreen/> 
-    }
+   
 
 }
 

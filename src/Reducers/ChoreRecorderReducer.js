@@ -8,7 +8,7 @@ import moment  from 'moment';
 const INITIAL_STATE = {
     "loggingIn": false,
     "loggedin": false,
-    "loggedinUser":"",
+    "loggedinUser":"joevdwalt",
     "logginFailureReason": "",
     "authorizationToken": "",
     "loginDetail": {
@@ -43,7 +43,7 @@ const ChoreRecorderReducer = (state = INITIAL_STATE, action) => {
             console.log("Username:" + newState.loggedinUser);
             console.log("Body: " + JSON.parse(response._bodyText).token);
              
-
+            
             return newState;
         }    
 

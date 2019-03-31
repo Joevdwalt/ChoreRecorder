@@ -1,3 +1,5 @@
+import { Settings } from '../common/Settings';
+
 export const loginBegin = () => ({
   type: "LOGIN_BEGIN"
 });
@@ -15,7 +17,7 @@ export function login(state) {
   return dispatch => {
     dispatch(loginBegin());
 
-    fetch('http://10.0.0.55:5001/User/authenticate', {
+    fetch(Settings.serverUrl +'/User/authenticate', {
         method: 'POST',
         body: JSON.stringify({
           username: state.username,
