@@ -43,7 +43,7 @@ export function login(state) {
 
         })
       .catch((error) => {
-       // console.error(error);
+        console.error(error);
       });
   }
 }
