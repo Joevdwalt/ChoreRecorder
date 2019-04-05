@@ -1,34 +1,40 @@
-import { _ } from 'lodash';
-import { Settings } from '../common/Settings';
-export function checkItem  (state, item){
+import {
+  _
+} from 'lodash';
+import moment from 'moment';
+
+import {
+  Settings
+} from '../common/Settings';
+export function checkItem(state, item) {
   return dispatch => {
-      dispatch(checkItemBegin);
+    dispatch(checkItemBegin);
 
 
-      itemToUpdate = _.findLast(state.taskItems, itemInArray => {
-        return itemInArray.id == item.id
-      });
+    itemToUpdate = _.findLast(state.taskItems, itemInArray => {
+      return itemInArray.id == item.id
+    });
 
-      itemToUpdate.done = !itemToUpdate.done;
+    itemToUpdate.done = !itemToUpdate.done;
 
-      return fetch(Settings.serverUrl +'/Tasks/'+ itemToUpdate.id,{
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + state.authorizationToken
-        },
-        body: JSON.stringify(itemToUpdate)
+    return fetch(Settings.serverUrl + '/Tasks/' + itemToUpdate.id, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + state.authorizationToken
+      },
+      body: JSON.stringify(itemToUpdate)
 
-      }).then((response) => {
-        dispatch(checkItemSuccess(itemToUpdate));
+    }).then((response) => {
+      dispatch(checkItemSuccess(itemToUpdate));
 
-        return;
+      return;
 
-      }).catch((error) => {
-        console.error(error);
-        dispatch(checkItemFailure(error));
-      });
+    }).catch((error) => {
+      console.error(error);
+      dispatch(checkItemFailure(error));
+    });
   }
 }
 
@@ -63,7 +69,13 @@ export function refreshItems(state) {
   return dispatch => {
     dispatch(beginRefreshItems());
 
-    return fetch(Settings.serverUrl +'/Tasks', {
+    var fromDate = moment().format(); 
+    var toDate = moment().format(); 
+
+    var query = "/Tasks/gettasksbydate/&fromDate=" + fromDate.toString() + "&toDate=" + toDate.toString();
+
+
+    return fetch(Settings.serverUrl + query, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
