@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 
 import SettingsScreen from '../screens/SettingsScreen';
 import MyTasksScreen from '../MyTasks/MyTasksScreen';
+import TaskTemplatesScreen from '../TaskTemplates/TaskTemplatesScreen'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -31,7 +32,7 @@ MyTasksStack.navigationOptions = {
 };
 
 const TaskTemplatesStack = createStackNavigator({
-  MyTasks: MyTasksScreen,
+  TaskTemplates: TaskTemplatesScreen,
 });
 TaskTemplatesStack.navigationOptions = {
   tabBarLabel: 'Task Templates',

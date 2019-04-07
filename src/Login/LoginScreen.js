@@ -63,7 +63,7 @@ class LoginScreen extends React.Component {
     return <View style={styles.container}>
 
             <Text style={TITLE.text}>
-              Login 
+              Welcome to the chores app 
             </Text>
             
             <TextInput style={TEXTINPUT.input} placeholder="Username" 

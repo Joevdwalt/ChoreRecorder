@@ -11,7 +11,6 @@ const INITIAL_STATE = {
     "registerSaving": false,
     "registerCompleted": false,
     "registerFailureReason": "",
-
     "loggingIn": false,
     "loggedin": false,
     "loggedinUser": "joevdwalt",
@@ -21,6 +20,7 @@ const INITIAL_STATE = {
         "username": "",
         "password": ""
     },
+    taskTemplates: [],
     date: moment().format('MMMM Do YYYY'),
     taskItems: [],
     saving: false
@@ -97,7 +97,7 @@ const ChoreRecorderReducer = (state = INITIAL_STATE, action) => {
                 newState = _.cloneDeep(state);
                 newState.registerSaving = false;
                 newState.registerCompleted = false;
-                
+
                 return newState;
             }
 
@@ -120,13 +120,17 @@ const ChoreRecorderReducer = (state = INITIAL_STATE, action) => {
             }
         case 'REFRESH_ITEMS_SUCCESS':
             {
-
                 newState = _.cloneDeep(state);
                 newState.taskItems = action.payload;
                 return newState;
-
-
             }
+
+        case 'REFRESH_TEMPLATES_SUCCESS' :
+        {
+            newState = _.cloneDeep(state);
+            newState.taskTemplates = action.payload;
+            return newState;
+        }
         default:
             return state
     }
