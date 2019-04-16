@@ -34,18 +34,21 @@ class MyTasksScreen extends React.Component {
   };
 
   render() {
-    /*<Ionicons 
-                  size={ 32 }
-                  name={ 'ios-arrow-back'} 
-                  
-                  />*/
     return (
       <View
         style={MAINCONTAINER.container}
         contentContainerStyle={styles.contentContainer}
       >
-        <View style={styles.dateselector}>
-          <Text style={TEXT.title}>{this.props.choreRecorderState.date}</Text>
+        <View>
+          <View style={styles.dateselector}>
+            <Text style={ICONMAN.iconman}>a</Text>
+            <View>
+              <Text style={TEXT.title}>
+                {this.props.choreRecorderState.date}
+              </Text>
+              <Text style={TEXT.normal}>Completed {this.props.choreRecorderState.completedItems} of {this.props.choreRecorderState.totalTaskItems} chores</Text>
+            </View>
+          </View>
         </View>
         <FlatList
           refreshing={false}
@@ -58,7 +61,6 @@ class MyTasksScreen extends React.Component {
               style={styles.container}
               contentContainerStyle={styles.contentContainer}
             >
-              <Text style={styles.taskitem}>{item.name}</Text>
               <Ionicons
                 style={styles.taskitemcheckbox}
                 name={!item.done ? "ios-checkbox-outline" : "ios-checkbox"}
@@ -67,10 +69,11 @@ class MyTasksScreen extends React.Component {
                   this.props.checkItem(this.props.choreRecorderState, item)
                 }
               />
+              <Text style={styles.taskitem}>{item.name}</Text>
             </View>
           )}
         />
-       
+
         {this._renderSaving()}
       </View>
     );
@@ -108,12 +111,28 @@ const MAINCONTAINER = StyleSheet.create({
   }
 });
 
+const ICONMAN = StyleSheet.create({
+  iconman: {
+    fontFamily: "Unititled",
+    fontSize: 45,
+    width: 45,
+    textAlign: "center",
+    padding: 0,
+    color: "#243664"
+  }
+});
+
 const TEXT = StyleSheet.create({
   title: {
     fontSize: 26,
     lineHeight: 25,
-    padding: 6,
-    textAlign: "left"
+    padding: 1,
+    textAlign: "left",
+    color: "#243664"
+  },
+  normal: {
+    textAlign: "left",
+    color: "#243664"
   }
 });
 
@@ -134,7 +153,6 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    //paddingTop: 30,
     alignItems: "flex-start"
   },
 

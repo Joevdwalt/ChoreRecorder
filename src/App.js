@@ -37,7 +37,7 @@ const store = createStore(ChoreReducer, applyMiddleware(thunk));
       );
     }
   }
-
+ 
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
@@ -49,7 +49,11 @@ const store = createStore(ChoreReducer, applyMiddleware(thunk));
         ...Icon.Ionicons.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'), 
+        Montserrat: require('./assets/fonts/Montserrat-Regular.otf'),
+        MontserratExtraBold: require('./assets/fonts/Montserrat-ExtraBold.otf'),
+        Unititled: require('./assets/fonts/untitled-font-1.ttf'),
+        icomoon : require('./assets/fonts/icomoon.ttf')
       }),
     ]);
   };
