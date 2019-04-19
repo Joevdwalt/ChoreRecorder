@@ -46,7 +46,10 @@ class MyTasksScreen extends React.Component {
               <Text style={TEXT.title}>
                 {this.props.choreRecorderState.date}
               </Text>
-              <Text style={TEXT.normal}>Completed {this.props.choreRecorderState.completedItems} of {this.props.choreRecorderState.totalTaskItems} chores</Text>
+              <Text style={TEXT.normal}>
+                Completed {this.props.choreRecorderState.completedItems} of{" "}
+                {this.props.choreRecorderState.totalTaskItems} chores
+              </Text>
             </View>
           </View>
         </View>
@@ -57,23 +60,39 @@ class MyTasksScreen extends React.Component {
           }
           data={this.props.choreRecorderState.taskItems}
           renderItem={({ item }) => (
-            <View
+            <TouchableOpacity
               style={styles.container}
               contentContainerStyle={styles.contentContainer}
+              onPress={() =>
+                this.props.checkItem(this.props.choreRecorderState, item)
+              }
             >
-              <Ionicons
-                style={styles.taskitemcheckbox}
-                name={!item.done ? "ios-checkbox-outline" : "ios-checkbox"}
-                size={26}
-                onPress={() =>
-                  this.props.checkItem(this.props.choreRecorderState, item)
-                }
-              />
+              <Text style={checkicons.icons}>
+                {" "}
+                {!item.done ? "ClearCheck" : "CheckedCheck"}{" "}
+              </Text>
+
               <Text style={styles.taskitem}>{item.name}</Text>
-            </View>
+            </TouchableOpacity>
           )}
         />
-
+        <View style={{
+           borderColor: "#E4E3E3",
+           borderStyle: "solid",
+           borderTopWidth: 1,
+           
+           
+          
+        }}>
+          <Text style={{
+            textAlign:"center",
+            fontSize: 46,
+            padding: 6,
+            
+            color: "#4B70B9",
+           
+          }}>1 of 10 points earned</Text>
+        </View>
         {this._renderSaving()}
       </View>
     );
@@ -102,7 +121,7 @@ export default connect(
 const MAINCONTAINER = StyleSheet.create({
   container: {
     paddingTop: 30,
-    paddingLeft: 15,
+    paddingLeft: 0,
     flex: 1,
     flexDirection: "column",
     borderStyle: "solid",
@@ -122,13 +141,22 @@ const ICONMAN = StyleSheet.create({
   }
 });
 
+const checkicons = StyleSheet.create({
+  icons: { 
+    color: "#4B70B9",
+    fontSize: 30,
+    fontFamily: "ChoreAppIcons"
+  }
+});
+
 const TEXT = StyleSheet.create({
   title: {
     fontSize: 26,
     lineHeight: 25,
     padding: 1,
     textAlign: "left",
-    color: "#243664"
+    color: "#243664",
+    fontFamily: "Montserrat",
   },
   normal: {
     textAlign: "left",
@@ -138,14 +166,15 @@ const TEXT = StyleSheet.create({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 5,
+    padding: 3,
     flex: 1,
     backgroundColor: "#fff",
     flexDirection: "row"
   },
   taskitem: {
-    flex: 7,
-    fontSize: 18
+    flex: 2,
+    fontSize: 23,
+    color: "#4B70B9",
   },
   taskitemcheckbox: {
     flex: 1,

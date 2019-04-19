@@ -118,7 +118,7 @@ class LoginScreen extends React.Component {
     );
   }
 }
-
+ 
 const navigateToRegister = NavigationActions.navigate({
   routeName: "Register",
   params: {},

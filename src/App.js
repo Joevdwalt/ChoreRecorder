@@ -53,7 +53,8 @@ const store = createStore(ChoreReducer, applyMiddleware(thunk));
         Montserrat: require('./assets/fonts/Montserrat-Regular.otf'),
         MontserratExtraBold: require('./assets/fonts/Montserrat-ExtraBold.otf'),
         Unititled: require('./assets/fonts/untitled-font-1.ttf'),
-        icomoon : require('./assets/fonts/icomoon.ttf')
+        icomoon : require('./assets/fonts/icomoon.ttf'),
+        ChoreAppIcons : require('./assets/fonts/ChoreAppIcons.ttf')
       }),
     ]);
   };
