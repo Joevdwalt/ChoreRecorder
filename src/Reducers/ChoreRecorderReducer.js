@@ -21,6 +21,8 @@ const INITIAL_STATE = {
   taskTemplates: [],
   totalTaskItems: 0,
   completedItems: 0,
+  totalTaskPoints: 0,
+  totalTaskPointsEarned: 0,
 
   date: moment().format("MMMM Do YYYY"),
   taskItems: [],
@@ -108,14 +110,38 @@ const ChoreRecorderReducer = (state = INITIAL_STATE, action) => {
 
       itemToUpdate = action.payload;
 
-      newState.completedItems = _.reduce(newState.taskItems, function(n, item) {
-        var toAdd = 0;
-        if (item.done) {
-          toAdd = 1;
-        }
+      newState.completedItems = _.reduce(
+        newState.taskItems,
+        function(n, item) {
+          var toAdd = 0;
+          if (item.done) {
+            toAdd = 1;
+          }
           return toAdd + n;
-        }, 0);
+        },
+        0
+      );
+      newState.totalTaskPoints = _.reduce(
+        newState.taskItems,
+        function(n, item) {
+          var toAdd = item.points;
+          return toAdd + n;
+        },
+        0
+      );
 
+      newState.totalTaskPointsEarned = _.reduce(
+        newState.taskItems,
+        function(n, item) {
+          var toAdd = 0;
+          if (item.done) {
+            toAdd = item.points;
+          }
+
+          return toAdd + n;
+        },
+        0
+      );
       return newState;
     }
     case "BEGIN_REFRESH_ITEMS": {
@@ -125,10 +151,34 @@ const ChoreRecorderReducer = (state = INITIAL_STATE, action) => {
       newState = _.cloneDeep(state);
       newState.taskItems = action.payload;
       newState.totalTaskItems = newState.taskItems.length;
-      newState.completedItems = _.reduce(newState.taskItems, function(n, item) {
+      newState.completedItems = _.reduce(
+        newState.taskItems,
+        function(n, item) {
           var toAdd = 0;
           if (item.done) {
             toAdd = 1;
+          }
+
+          return toAdd + n;
+        },
+        0
+      );
+
+      newState.totalTaskPoints = _.reduce(
+        newState.taskItems,
+        function(n, item) {
+          var toAdd = item.points;
+          return toAdd + n;
+        },
+        0
+      );
+
+      newState.totalTaskPointsEarned = _.reduce(
+        newState.taskItems,
+        function(n, item) {
+          var toAdd = 0;
+          if (item.done) {
+            toAdd = item.points;
           }
 
           return toAdd + n;

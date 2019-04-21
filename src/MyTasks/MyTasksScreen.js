@@ -72,7 +72,7 @@ class MyTasksScreen extends React.Component {
                 {!item.done ? "ClearCheck" : "CheckedCheck"}{" "}
               </Text>
 
-              <Text style={styles.taskitem}>{item.name}</Text>
+              <Text style={styles.taskitem}>{item.name + " (" + item.points+")" }</Text>
             </TouchableOpacity>
           )}
         />
@@ -91,7 +91,7 @@ class MyTasksScreen extends React.Component {
             
             color: "#4B70B9",
            
-          }}>1 of 10 points earned</Text>
+          }}>{this.props.choreRecorderState.totalTaskPointsEarned} of {this.props.choreRecorderState.totalTaskPoints} points earned</Text>
         </View>
         {this._renderSaving()}
       </View>
