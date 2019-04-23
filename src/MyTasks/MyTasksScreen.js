@@ -7,7 +7,9 @@ import {
   Text,
   TouchableOpacity,
   View,
-  FlatList
+  FlatList,
+  Modal,
+  Alert
 } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -15,16 +17,24 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { checkItem, refreshItems } from "./MyTasksActions/";
+import { UserProfileSwitchScreen } from "../UserProfile/UserProfileSwitchScreen";
+import { loadProfiles, selectProfile } from "../UserProfile/UserProfileSwitchActions";
 
 class MyTasksScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
 
+  state = {
+    modalVisible: false
+  };
+
   componentDidMount() {
     this.props.refreshItems(this.props.choreRecorderState);
   }
-
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
   _renderSaving = () => {
     if (this.props.choreRecorderState.saving) {
       return <Text>Saving ...</Text>;
@@ -42,6 +52,7 @@ class MyTasksScreen extends React.Component {
         <View>
           <View style={styles.dateselector}>
             <Text style={ICONMAN.iconman}>a</Text>
+
             <View>
               <Text style={TEXT.title}>
                 {this.props.choreRecorderState.date}
@@ -51,6 +62,13 @@ class MyTasksScreen extends React.Component {
                 {this.props.choreRecorderState.totalTaskItems} chores
               </Text>
             </View>
+            <TouchableOpacity
+              onPress={() => {
+                this.setModalVisible(true);
+              }}
+            >
+              <Text style={TEXT.normal}> Switch user</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <FlatList
@@ -72,28 +90,48 @@ class MyTasksScreen extends React.Component {
                 {!item.done ? "ClearCheck" : "CheckedCheck"}{" "}
               </Text>
 
-              <Text style={styles.taskitem}>{item.name + " (" + item.points+")" }</Text>
+              <Text style={styles.taskitem}>
+                {item.name + " (" + item.points + ")"}
+              </Text>
             </TouchableOpacity>
           )}
         />
-        <View style={{
-           borderColor: "#E4E3E3",
-           borderStyle: "solid",
-           borderTopWidth: 1,
-           
-           
-          
-        }}>
-          <Text style={{
-            textAlign:"center",
-            fontSize: 46,
-            padding: 6,
-            
-            color: "#4B70B9",
-           
-          }}>{this.props.choreRecorderState.totalTaskPointsEarned} of {this.props.choreRecorderState.totalTaskPoints} points earned</Text>
+        <View
+          style={{
+            borderColor: "#E4E3E3",
+            borderStyle: "solid",
+            borderTopWidth: 1
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 46,
+              padding: 6,
+
+              color: "#4B70B9"
+            }}
+          >
+            {this.props.choreRecorderState.totalTaskPointsEarned} of{" "}
+            {this.props.choreRecorderState.totalTaskPoints} points earned
+          </Text>
         </View>
         {this._renderSaving()}
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <UserProfileSwitchScreen
+            choreRecorderState={this.props.choreRecorderState}
+            loadProfiles={this.props.loadProfiles}
+            selectProfile={this.props.selectProfile}
+            closeModal={this.setModalVisible}
+          />
+        </Modal>
       </View>
     );
   }
@@ -103,7 +141,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       checkItem,
-      refreshItems
+      refreshItems,
+      loadProfiles,
+      selectProfile
     },
     dispatch
   );
@@ -142,7 +182,7 @@ const ICONMAN = StyleSheet.create({
 });
 
 const checkicons = StyleSheet.create({
-  icons: { 
+  icons: {
     color: "#4B70B9",
     fontSize: 30,
     fontFamily: "ChoreAppIcons"
@@ -156,7 +196,7 @@ const TEXT = StyleSheet.create({
     padding: 1,
     textAlign: "left",
     color: "#243664",
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat"
   },
   normal: {
     textAlign: "left",
@@ -174,7 +214,7 @@ const styles = StyleSheet.create({
   taskitem: {
     flex: 2,
     fontSize: 23,
-    color: "#4B70B9",
+    color: "#4B70B9"
   },
   taskitemcheckbox: {
     flex: 1,

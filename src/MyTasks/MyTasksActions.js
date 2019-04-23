@@ -9,8 +9,6 @@ import {
 export function checkItem(state, item) {
   return dispatch => {
     dispatch(checkItemBegin);
-
-
     itemToUpdate = _.findLast(state.taskItems, itemInArray => {
       return itemInArray.id == item.id
     });

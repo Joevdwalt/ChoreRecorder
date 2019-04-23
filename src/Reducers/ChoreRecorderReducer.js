@@ -23,7 +23,8 @@ const INITIAL_STATE = {
   completedItems: 0,
   totalTaskPoints: 0,
   totalTaskPointsEarned: 0,
-
+  userProfiles: [],
+  userProfileSelected: {},
   date: moment().format("MMMM Do YYYY"),
   taskItems: [],
   saving: false
@@ -194,6 +195,19 @@ const ChoreRecorderReducer = (state = INITIAL_STATE, action) => {
       newState.taskTemplates = action.payload;
       return newState;
     }
+
+    case "LOAD_PROFILES_SUCCESS": {
+      newState = _.cloneDeep(state);
+      newState.userProfiles = action.payload;
+      return newState;
+    }
+
+    case "SELECT_PROFILE": {
+      newState = _.cloneDeep(state);
+      newState.userProfileSelected = action.payload;
+      return newState;
+    }
+
     default:
       return state;
   }
