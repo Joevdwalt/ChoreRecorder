@@ -21,6 +21,12 @@ import { UserProfileSwitchScreen } from "../UserProfile/UserProfileSwitchScreen"
 import { loadProfiles, selectProfile } from "../UserProfile/UserProfileSwitchActions";
 
 class MyTasksScreen extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.setModalVisible = this.setModalVisible.bind(this)
+  }
+
   static navigationOptions = {
     header: null
   };
@@ -67,7 +73,7 @@ class MyTasksScreen extends React.Component {
                 this.setModalVisible(true);
               }}
             >
-              <Text style={TEXT.normal}> Switch user</Text>
+              <Text style={TEXT.normal}> Switch user: {this.props.choreRecorderState.userProfileSelected.name}</Text>
             </TouchableOpacity>
           </View>
         </View>

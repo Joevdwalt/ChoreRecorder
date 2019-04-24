@@ -24,7 +24,9 @@ const INITIAL_STATE = {
   totalTaskPoints: 0,
   totalTaskPointsEarned: 0,
   userProfiles: [],
-  userProfileSelected: {},
+  userProfileSelected: {
+    name: ""
+  },
   date: moment().format("MMMM Do YYYY"),
   taskItems: [],
   saving: false
