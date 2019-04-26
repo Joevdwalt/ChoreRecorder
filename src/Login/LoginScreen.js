@@ -18,7 +18,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { login } from "./LoginActions/";
+import { login, loadAppState } from "./LoginActions/";
 
 import { StackActions, NavigationActions } from "react-navigation";
 
@@ -32,7 +32,9 @@ class LoginScreen extends React.Component {
     username: "joevdwalt",
     password: "joevdwalt"
   };
-
+  componentDidMount(){
+    this.props.loadAppState();
+  }
   componentDidUpdate(prevProps) {
     if (this.props.choreRecorderState.loggedin) {
       this.props.navigation.dispatch(navigateToMain);
@@ -134,7 +136,7 @@ const navigateToMain = NavigationActions.navigate({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      login
+      login,loadAppState
     },
     dispatch
   );

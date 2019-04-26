@@ -19,8 +19,9 @@ export class UserProfileSwitchScreen extends React.Component {
   }
 
   selectProfile(item){
-    this.props.selectProfile(item)
-    this.props.closeModal(false)
+    this.props.selectProfile(item);
+    this.props.saveSelectedProfile(this.props.choreRecorderState, item);
+    this.props.closeModal(false);
   }
 
   render() {
@@ -33,6 +34,7 @@ export class UserProfileSwitchScreen extends React.Component {
             this.props.loadProfiles(this.props.choreRecorderState)
           }
           data={this.props.choreRecorderState.userProfiles}
+          keyExtractor={(item, index) => item.id}
           renderItem={({ item }) => (
             <TouchableOpacity 
             onPress={()=>{

@@ -2,6 +2,7 @@ import { _ } from "lodash";
 import moment from "moment";
 
 import { Settings } from "../common/Settings";
+import { AsyncStorage } from "react-native";
 
 export function loadProfiles(state) {
   return dispatch => {
@@ -45,3 +46,15 @@ export const selectProfile = item => ({
   type: "SELECT_PROFILE",
   payload: item
 });
+
+export function saveSelectedProfile(state, item) {
+  return async dispatch => {
+    try {
+      state.userProfileSelected = item;
+      await AsyncStorage.setItem("localdata", JSON.stringify(state));
+    } catch (error) {
+      //Error saving data
+      console.log(error.toString());
+    }
+  };
+}

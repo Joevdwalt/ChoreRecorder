@@ -1,5 +1,5 @@
 import { Settings } from '../common/Settings';
-
+import { AsyncStorage} from 'react-native';
 export const loginBegin = () => ({
   type: "LOGIN_BEGIN"
 });
@@ -47,3 +47,31 @@ export function login(state) {
       });
   }
 }
+
+export const loadAppStateSuccess = (result) => ({
+  type: "LOADAPPSTATE_SUCCESS",
+  payload: result
+})
+
+export function loadAppState(){
+  return async dispatch => {
+    try {
+      await AsyncStorage.getItem("localdata").then((result) => {
+        if (result) {
+            try {
+                result = JSON.parse(result);
+                dispatch(loadAppStateSuccess(result));
+            } catch (e) {
+                 console.error('AsyncStorage#getItem error deserializing JSON for key: ' + key, e.message);
+            }
+        }
+        return result;
+    });
+
+    } catch (error) {
+      //Error saving data
+      console.log(error.toString());
+    }
+  };
+}
+

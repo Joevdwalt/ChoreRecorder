@@ -18,13 +18,18 @@ import { connect } from "react-redux";
 
 import { checkItem, refreshItems } from "./MyTasksActions/";
 import { UserProfileSwitchScreen } from "../UserProfile/UserProfileSwitchScreen";
-import { loadProfiles, selectProfile } from "../UserProfile/UserProfileSwitchActions";
+import {
+  loadProfiles,
+  selectProfile,
+  saveSelectedProfile
+} from "../UserProfile/UserProfileSwitchActions";
+
 
 class MyTasksScreen extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.setModalVisible = this.setModalVisible.bind(this)
+    this.setModalVisible = this.setModalVisible.bind(this);
   }
 
   static navigationOptions = {
@@ -73,7 +78,11 @@ class MyTasksScreen extends React.Component {
                 this.setModalVisible(true);
               }}
             >
-              <Text style={TEXT.normal}> Switch user: {this.props.choreRecorderState.userProfileSelected.name}</Text>
+              <Text style={TEXT.normal}>
+                {" "}
+                Switch user:{" "}
+                {this.props.choreRecorderState.userProfileSelected.name}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -128,7 +137,7 @@ class MyTasksScreen extends React.Component {
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
+            //console.log("Close dialog");
           }}
         >
           <UserProfileSwitchScreen
@@ -136,6 +145,7 @@ class MyTasksScreen extends React.Component {
             loadProfiles={this.props.loadProfiles}
             selectProfile={this.props.selectProfile}
             closeModal={this.setModalVisible}
+            saveSelectedProfile={this.props.saveSelectedProfile}
           />
         </Modal>
       </View>
@@ -149,7 +159,8 @@ const mapDispatchToProps = dispatch =>
       checkItem,
       refreshItems,
       loadProfiles,
-      selectProfile
+      selectProfile,
+      saveSelectedProfile
     },
     dispatch
   );

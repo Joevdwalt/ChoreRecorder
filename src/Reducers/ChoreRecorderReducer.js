@@ -49,6 +49,13 @@ const ChoreRecorderReducer = (state = INITIAL_STATE, action) => {
       var resultPayload = JSON.parse(response._bodyText);
       newState.loggedin = true;
 
+      // Reset selected profile if not the same login.
+      if(newState.loggedinUser != resultPayload.username){
+        newState.userProfileSelected = {
+          name: ""
+        };
+      }
+
       newState.loggedinUser = resultPayload.username;
       newState.authorizationToken = resultPayload.token;
       newState.loggingIn = false;
@@ -59,6 +66,8 @@ const ChoreRecorderReducer = (state = INITIAL_STATE, action) => {
       console.log("Username:" + newState.loggedinUser);
       console.log("Body: " + resultPayload.token);
 
+
+
       return newState;
     }
 
@@ -67,6 +76,16 @@ const ChoreRecorderReducer = (state = INITIAL_STATE, action) => {
       var response = action.payload;
 
       newState.logginFailureReason = JSON.parse(response._bodyText).message;
+
+      return newState;
+    }
+
+    case "LOADAPPSTATE_SUCCESS": {
+      newState = _.cloneDeep(state);
+      var response = action.payload;
+      
+      newState.loggedinUser = response.loggedinUser;
+      newState.userProfileSelected = response.userProfileSelected;
 
       return newState;
     }
