@@ -62,27 +62,29 @@ class MyTasksScreen extends React.Component {
       >
         <View>
           <View style={styles.dateselector}>
-            <Text style={ICONMAN.iconman}>a</Text>
+            <View style={{ flexDirection:"row", marginTop:9 }}>
+              <Text style={ICONMAN.iconman}>a</Text>
 
-            <View>
-              <Text style={TEXT.title}>
-                {this.props.choreRecorderState.date}
-              </Text>
-              <Text style={TEXT.normal}>
-                Completed {this.props.choreRecorderState.completedItems} of{" "}
-                {this.props.choreRecorderState.totalTaskItems} chores
-              </Text>
+              <View >
+                <Text style={TEXT.title}>
+                  {this.props.choreRecorderState.date}
+                </Text>
+                <Text style={TEXT.normal}>
+                  Completed {this.props.choreRecorderState.completedItems} of{" "}
+                  {this.props.choreRecorderState.totalTaskItems} chores
+                </Text>
+              </View>
             </View>
             <TouchableOpacity
               onPress={() => {
                 this.setModalVisible(true);
               }}
             >
-              <Text style={TEXT.normal}>
-                {" "}
-                Switch user:{" "}
-                {this.props.choreRecorderState.userProfileSelected.name}
-              </Text>
+              <View>
+                <View style={DEFAULT.CircleShapeView}>
+                      <Text style={DEFAULT.CircleShapeViewText}>{this.props.choreRecorderState.userProfileSelected.name[0]}</Text>
+                  </View>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -175,6 +177,33 @@ export default connect(
   mapDispatchToProps
 )(MyTasksScreen);
 
+const DEFAULT = StyleSheet.create({
+  container: {
+    margin: 20
+  },
+  CircleShapeView: {
+    width: 55,
+    height: 55,
+    borderRadius: 150/2,
+    backgroundColor: '#EA58ED',
+    marginRight: 10
+    
+  },
+  CircleShapeViewText:
+  {
+    textAlign: "center",
+    marginTop:6,
+    fontSize:35,
+    color: "#FFFFFF"
+  },
+  row: {
+    flexDirection:"row"
+    
+  },
+
+
+});
+
 const MAINCONTAINER = StyleSheet.create({
   container: {
     paddingTop: 30,
@@ -194,6 +223,7 @@ const ICONMAN = StyleSheet.create({
     width: 45,
     textAlign: "center",
     padding: 0,
+    
     color: "#243664"
   }
 });
@@ -211,6 +241,7 @@ const TEXT = StyleSheet.create({
     fontSize: 26,
     lineHeight: 25,
     padding: 1,
+    
     textAlign: "left",
     color: "#243664",
     fontFamily: "Montserrat"
@@ -279,6 +310,7 @@ const styles = StyleSheet.create({
   },
   dateselector: {
     //flex: 1,
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 });
